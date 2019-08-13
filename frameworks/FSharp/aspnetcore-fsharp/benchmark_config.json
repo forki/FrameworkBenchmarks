@@ -1,0 +1,23 @@
+{
+  "framework": "aspcore-fsharp",
+  "tests": [{
+    "default": {
+      "plaintext_url": "/plaintext",
+      "json_url": "/json",
+      "port": 8080,
+      "approach": "Realistic",
+      "classification": "Platform",
+      "database": "None",
+      "framework": "ASP.NET Core F#",
+      "language": "F#",
+      "orm": "Raw",
+      "platform": ".NET",
+      "flavor": "CoreCLR",
+      "webserver": "Kestrel",
+      "os": "Linux",
+      "database_os": "Linux",
+      "display_name": "ASP.NET Core F#",
+      "notes": "",
+      "versus": "aspcore-fsharp" }
+  }]
+}
