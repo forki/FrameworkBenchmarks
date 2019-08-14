@@ -121,9 +121,25 @@ module Application =
 
             member self.ExecuteAsync() =
                 let t = task {
+                    // let task = self.Reader.ReadAsync()
+                    // if not task.IsCompleted then
+                    //     let! _ =  self.Writer.FlushAsync()
+                    //     ()
+
+
+                    // let! result = task
+                    // let buffer = result.Buffer
+                    // let mutable isRunningInBuffer = true
+                    // while isRunningInBuffer do
+                    //     if buffer.IsEmpty then
+                    //         isRunningInBuffer <- false
+                    //     else
+                    //         ()
                     plainText self.Writer
                     self.Writer.Complete()
 
+                    // No more input or incomplete data, Advance the Reader
+                    //self.Reader.AdvanceTo(buffer.Start, examined);
                 }
                 t :> Task
 
