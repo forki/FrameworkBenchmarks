@@ -48,17 +48,20 @@ module Texts =
 
     let _eoh = Encoding.ASCII.GetBytes "\r\n\r\n" // End Of Headers
     let _http11OK = Encoding.ASCII.GetBytes "HTTP/1.1 200 OK\r\n"
-    let _headerServer = Encoding.ASCII.GetBytes  "Server: Custom"
+    let _headerServer = Encoding.ASCII.GetBytes "Server: Custom\r\n"
     let _headerContentTypeText = Encoding.ASCII.GetBytes "Content-Type: text/plain\r\n"
-    let _headerContentLength = Encoding.ASCII.GetBytes "Content-Length: "
     let _plainTextBody = Encoding.ASCII.GetBytes "Hello, World!"
-    let _plainTextBodyLength = _plainTextBody.Length.ToString() |> Encoding.ASCII.GetBytes
+    let _headerContentLength = Encoding.ASCII.GetBytes ("Content-Length: " + _plainTextBody.Length.ToString())
+
+    let dateHeader() =
+        let dateStr = System.DateTime.UtcNow.ToString("r");
+        Encoding.ASCII.GetBytes(String.Format("Date: {0}\r\n",dateStr))
 
 
 module Endpoints =
 
     let createPlaintext() =
-        IPEndPoint(IPAddress.Loopback, 8080)
+        IPEndPoint(IPAddress.Any, 8080)
 
 module Application =
     type Startup() =
@@ -84,14 +87,13 @@ module Application =
         // Server headers
         writer.Write(ReadOnlySpan<byte> Texts._headerServer)
         // Date header
-        //writer.Write(DateHeader.HeaderBytes)
+        writer.Write(ReadOnlySpan<byte> (Texts.dateHeader()))
 
         // Content-Type header
         writer.Write(ReadOnlySpan<byte> Texts._headerContentTypeText)
 
         // Content-Length header
         writer.Write(ReadOnlySpan<byte> Texts._headerContentLength)
-        writer.Write(ReadOnlySpan<byte> Texts._plainTextBodyLength)
 
         // End of headers
         writer.Write(ReadOnlySpan<byte> Texts._eoh)
