@@ -121,14 +121,14 @@ module Application =
 
             member self.ExecuteAsync() =
                 let t = task {
-                    // let task = self.Reader.ReadAsync()
-                    // if not task.IsCompleted then
-                    //     let! _ =  self.Writer.FlushAsync()
-                    //     ()
+                    let task = self.Reader.ReadAsync()
+                    if not task.IsCompleted then
+                         let! _ =  self.Writer.FlushAsync()
+                         ()
 
 
-                    // let! result = task
-                    // let buffer = result.Buffer
+                    let! result = task
+                    let buffer = result.Buffer
                     // let mutable isRunningInBuffer = true
                     // while isRunningInBuffer do
                     //     if buffer.IsEmpty then
