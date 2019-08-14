@@ -135,6 +135,8 @@ module Application =
                     //         isRunningInBuffer <- false
                     //     else
                     //         ()
+
+                    self.Reader.Complete()
                     plainText self.Writer
                     self.Writer.Complete()
 
